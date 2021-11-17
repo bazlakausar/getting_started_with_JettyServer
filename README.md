@@ -1,4 +1,4 @@
-# getting_started_with_JettyServer
+# getting_started_with_JettyServer (Windows)
    # INSTALLATION OF A STANDALONE JETTY SERVER
    
  1) Download Jetty from https://www.eclipse.org/jetty/download.html and extract the zip file somewhere to your filesystem.
@@ -92,6 +92,61 @@ Now open web browser to:
    ![4](https://user-images.githubusercontent.com/79251268/131340831-994d7755-778a-4cea-ba69-f60b282aa924.png)
 
    
+# getting_started_with_JettyServer (Linux)
+   # INSTALLATION OF A STANDALONE JETTY SERVER
+   
+   1) Before installing any software, ensure sure your system is up to date by typing the following command into the terminal:
+         
+	   sudo apt update
+	   
+   2) Check the version of java (if present, else install java first):
+   
+           java -version
+	   
+   3) FIrstly go to the official site of jetty and download any latest version that you wish to proceed with:
+   
+           https://zookeeper.apache.org/releases.html
+	   
+   4) Unzip the jetty distribution file and run the following commands:
+   
+            unzip jetty-distribution-9.3.12.v20160915.zip
+	    mv jetty-distribution-9.3.12.v20160915 jetty
+            mv jetty /opt
+	    
+   5) Jetty will be the name of the user and group. First, Let's start by forming a group:
+   
+            sudo addgroup --quiet --system jetty
+	    
+Now add a user to the group, run the following commands:
+	
+	     adduser --quiet --system --ingroup jetty --no-create-home --disabled-password jetty
+	     
+	     usermod -c "Jetty" -d /opt/jetty -g jetty jetty
+	     
+   6) Now let us Change ownership of /opt/jetty directory to user jetty and group jetty:
+         
+	     chown -R jetty:jetty /opt/jetty
+	     
+   7) Next, build a startup script file by symlinking the jetty.sh script to the /etc/init.d/ directory:
+
+              ln -s /opt/jetty/bin/jetty.sh /etc/init.d/jetty
+	      
+   8) Then, add the following information, replacing port and listening address with your value (in /etc/default/jetty):
+     
+               nano /etc/default/jetty
+	       
+ADD:
+	       JETTY_HOME=/opt/jetty
+               JETTY_USER=jetty
+               JETTY_PORT=8080
+               JETTY_HOST=y0ur_server_IP
+               JETTY_LOGS=/opt/jetty/logs/
+	       
+   9) Move to the directory where you have placed your jetty distribution, in my case it is in /opt/jetty
+       
+               java -jar start.jar
+	       
+ Congratulations! Jetty is successfully running.
 
     
     
